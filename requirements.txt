@@ -1,0 +1,13 @@
+accelerate
+bitsandbytes
+datasets
+evaluate
+hf_transfer
+ipykernel
+ipywidgets
+peft
+rouge_score
+torch
+trackio
+transformers
+trl
