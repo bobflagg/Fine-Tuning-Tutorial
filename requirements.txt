@@ -6,7 +6,9 @@ hf_transfer
 ipykernel
 ipywidgets
 peft
+python-dotenv
 rouge_score
+srsly
 torch
 trackio
 transformers
