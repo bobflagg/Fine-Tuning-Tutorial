@@ -2,6 +2,19 @@
 set -euo pipefail
 log() { echo -e "\n[bootstrap] $*\n"; }
 
+INSTALL_CLAUDE_CODE=false
+while getopts "c" opt; do
+  case $opt in
+    c)
+      INSTALL_CLAUDE_CODE=true
+      ;;
+    \?)
+      echo "Invalid option" >&2
+      exit 1
+      ;;
+  esac
+done
+
 # Set credentials:
 KEY_PATH="/root/.ssh/id_ed25519_bobflagg"
 if [ ! -f "$KEY_PATH" ]; then
@@ -21,18 +34,16 @@ apt-get update
 apt-get install -y tree
 apt-get install -y htop
 
-
 pip install -r /workspace/Fine-Tuning-Tutorial/requirements.txt
 
+# 4. Evaluate the boolean variable
+if [ "$INSTALL_CLAUDE_CODE" = true ]; then
+  echo "Installing Claude Code."
+  # Install Claude Code:
+  curl -fsSL https://claude.ai/install.sh | bash
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+else
+  echo "Verbose mode is DISABLED."
+fi
 
-# Install Claude Code:
-curl -fsSL https://claude.ai/install.sh | bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
-cat << 'EOF'
-Set up Claude Code:
->> claude
-  /plugin marketplace add huggingface/skills
-  /plugin install hf-cli@huggingface/skills
-  hf skills add huggingface-trackio
-EOF
 
