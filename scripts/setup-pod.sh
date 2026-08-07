@@ -36,6 +36,13 @@ apt-get install -y htop
 
 pip install -r /workspace/Fine-Tuning-Tutorial/requirements.txt
 
+cd /workspace
+mkdir -p /workspace/.claude/skills
+git clone https://github.com/huggingface/skills.git
+cp -r skills/skills/trl-training /workspace/.claude/skills/.
+cp -r skills/skills/huggingface-trackio  /workspace/.claude/skills/.
+rm -fr skills
+
 # 4. Evaluate the boolean variable
 if [ "$INSTALL_CLAUDE_CODE" = true ]; then
   echo "Installing Claude Code."
